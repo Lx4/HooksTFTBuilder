@@ -3,7 +3,7 @@ export default (state, action) => {
     case "SET_DROPPABLE":
       return {
         ...state,
-        droppable: true,
+        droppable: action.bool,
       };
     default:
       return state;
