@@ -9,7 +9,7 @@ const Champion = ({ champion }) => {
 
   return (
     <div
-      className={`h-8 w-8 sm:h-16 sm:w-16 border sm:border-2  mr-1 mb-1 object-cover rounded overflow-hidden cost-${cost}`}
+      className={`h-8 w-8 sm:h-16 sm:w-16 border sm:border-2  sm:mr-1 sm:mb-1 object-cover rounded overflow-hidden cost-${cost}`}
       draggable={true}
       onDragStart={(e) => {
         e.dataTransfer.setData("champId", championId);
@@ -20,7 +20,10 @@ const Champion = ({ champion }) => {
         setBoardDroppable(false);
       }}
     >
-      <img src={`/img/champions/${championId}.png`} alt={`${championId}`} />
+      <img
+        src={`${process.env.REACT_APP_URL_IMG}/img/champions/${championId}.png`}
+        alt={`${championId}`}
+      />
     </div>
   );
 };

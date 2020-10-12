@@ -1,26 +1,31 @@
-.cost-0 {
+.cost-1 {
   border-color: grey;
   color: grey;
-}
-
-.cost-1 {
-  border-color: #11b288;
-  color: #11b288;
+  background-color: grey;
 }
 
 .cost-2 {
-  border-color: #207ac7;
-  color: #207ac7;
+  border-color: #11b288;
+  color: #11b288;
+  background-color: #11b288;
 }
 
 .cost-3 {
-  border-color: #c440da;
-  color: #c440da;
+  border-color: #207ac7;
+  color: #207ac7;
+  background-color: #207ac7;
 }
 
 .cost-4 {
+  border-color: #c440da;
+  color: #c440da;
+  background-color: #c440da;
+}
+
+.cost-5 {
   border-color: #ffb93b;
   color: #ffb93b;
+  background-color: #ffb93b;
 }
 /* TRAITS
 .style-1 {
