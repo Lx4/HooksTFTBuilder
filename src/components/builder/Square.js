@@ -1,4 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useDrop } from "react-dnd";
+
 import "./Square.css";
 import "./Champion.css";
 import boardContext from "../../context/board/boardContext";
@@ -7,6 +9,10 @@ const Square = ({ row, column }) => {
   const { droppable, board, handleDropOnSquare } = useContext(boardContext);
   const [bg, setBg] = useState("bg-gray-800");
   const champion = board[row][column];
+  const [, drop] = useDrop({
+    accept: "champion",
+    drop: ({ champion }) => handleDropOnSquare(champion, row, column),
+  });
 
   useEffect(() => {
     if (droppable) {
@@ -14,35 +20,36 @@ const Square = ({ row, column }) => {
     } else setBg("bg-gray-800");
   }, [droppable]);
 
-  const handleDragStart = (e) => {
-    e.dataTransfer.setData("source", "square");
-    e.dataTransfer.setData("sourceRow", row);
-    e.dataTransfer.setData("sourceColumn", column);
-  };
+  // const handleDragStart = (e) => {
+  //   e.dataTransfer.setData("source", "square");
+  //   e.dataTransfer.setData("sourceRow", row);
+  //   e.dataTransfer.setData("sourceColumn", column);
+  // };
 
-  const handleDrop = (e) => {
-    handleDropOnSquare(e, row, column);
-  };
+  // const handleDrop = (e) => {
+  //   // change the call to have more specific functions calls
+  //   handleDropOnSquare(e, row, column);
+  // };
 
   return (
     <div
+      ref={drop}
+      // draggable={!!champion}
+      // onDragOver={(e) => {
+      //   e.preventDefault();
+      //   e.dataTransfer.dropEffect = "copy";
+      // }}
+      // onDragStart={handleDragStart}
+      // onDrop={handleDrop}
       className={`w-10 h-11 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${
         champion ? "cost-" + champion.cost : "bg-gray-900"
       } `}
-      onDragOver={(e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = "copy";
-      }}
-      onDrop={handleDrop}
-      onDragStart={handleDragStart}
     >
       <div className={`w-9 h-10 sm:w-18 sm:h-20 hexagon ${bg} object-cover`}>
         {champion && (
           <img
             className="h-full w-full"
-            src={`${
-              process.env.REACT_APP_URL_IMG
-            }/img/champions/${champion.championId}.png`}
+            src={`${process.env.REACT_APP_URL_IMG}/img/champions/${champion.championId}.png`}
             alt=""
           />
         )}
