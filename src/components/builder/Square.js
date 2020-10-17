@@ -9,6 +9,7 @@ const Square = ({ row, column }) => {
   const { droppable, board, handleDropOnSquare } = useContext(boardContext);
   const [bg, setBg] = useState("bg-gray-800");
   const champion = board[row][column];
+  
   const [, drop] = useDrop({
     accept: "champion",
     drop: ({ champion }) => handleDropOnSquare(champion, row, column),

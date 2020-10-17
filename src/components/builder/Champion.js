@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDrag } from "react-dnd";
 import boardContext from "../../context/board/boardContext";
 
@@ -15,11 +15,14 @@ const Champion = ({ champion }) => {
     }),
   });
 
+  useEffect(() => {
+    setBoardDroppable(isDragging);
+  }, [isDragging]);
+
   return (
     <div
       ref={drag}
       className={`h-8 w-8 sm:h-16 sm:w-16 border sm:border-2  sm:mr-1 sm:mb-1 object-cover rounded overflow-hidden cost-${cost}`}
-
       // onDragStart={(e) => {
       //   e.dataTransfer.setData("champId", championId);
       //   e.dataTransfer.setData("source", "championsPicker");
@@ -31,7 +34,7 @@ const Champion = ({ champion }) => {
       // onTouchEnd={() => {
       //   setBoardDroppable(false);
       // }}
-      // onClick={() => addToBoard(championId)}
+      onClick={() => addToBoard(championId)}
       // onDragEnd={() => {
       //   setBoardDroppable(false);
       // }}
