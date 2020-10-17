@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 // import { DndProvider } from "react-dnd";
 // import { HTML5Backend } from "react-dnd-html5-backend";
 // import { TouchBackend } from "react-dnd-touch-backend";
@@ -8,6 +8,10 @@ import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
 
 import Board from "../builder/Board";
 import Champions from "../builder/Champions";
+import Items from "../builder/Items";
+import Tabs from "../builder/layout/Tabs";
+
+import FiltersContext from "../../context/filters/filtersContext";
 
 import "../builder/Champion.css";
 
@@ -20,11 +24,8 @@ const MyPreview = () => {
     if (item.champion) {
       championId = item.champion.championId;
       cost = item.champion.cost;
-      console.log(cost);
-      console.log(championId);
     }
   }
-
   if (!display) {
     return null;
   }
@@ -42,19 +43,19 @@ const MyPreview = () => {
 };
 
 const Builder = () => {
+  const { picker } = useContext(FiltersContext);
   return (
     <DndProvider options={HTML5toTouch}>
-      <div className="p-2">
-        <h1 className="text-gray-100 font text-xl text-teal-400">
-          Lx4 Builder's
-        </h1>
+      <div className="px-2 h-screen">
+        <h1 className="font text-xl text-teal-400">Lx4 Builder's</h1>
         <div className="sm:flex mt-4">
           <Board />
           <div className="">Traits</div>
         </div>
-        <div className="mt-8">
-          <Champions />
-          <div>Items Picker</div>
+        <Tabs />
+        <div className="mt-4 container flex flex-col">
+          {picker === "champions" && <Champions />}
+          {picker === "items" && <Items />}
         </div>
       </div>
       <MyPreview />

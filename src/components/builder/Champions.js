@@ -7,7 +7,7 @@ const Champions = () => {
   return (
     <div
       className="
-    pl-4 flex max-w-2xl flex-wrap "
+    inline-flex sm:max-w-2xl flex-wrap "
     >
       {champions.map((champion) => (
         <Champion key={champion.championId} champion={champion}></Champion>

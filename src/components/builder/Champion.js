@@ -9,7 +9,7 @@ const Champion = ({ champion }) => {
   const { championId, cost } = champion;
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: "champion", champion },
+    item: { type: "champion", champion, origin: "champions" },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),

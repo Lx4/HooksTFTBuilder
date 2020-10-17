@@ -14,7 +14,15 @@ export default (state, action) => {
           });
         }),
       };
-
+    case "SWAP_SQUARES":
+      let board = state.board.map((row) => {
+        return row.map((column) => column);
+      });
+      let temp = board[action.targetRow][action.targetCol];
+      board[action.targetRow][action.targetCol] =
+        board[action.originRow][action.originCol];
+      board[action.originRow][action.originCol] = temp;
+      return { ...state, board };
     case "SET_DROPPABLE":
       return {
         ...state,

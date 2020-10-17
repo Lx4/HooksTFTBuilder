@@ -1,18 +1,38 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useDrop } from "react-dnd";
+import { useDrop, useDrag } from "react-dnd";
 
 import "./Square.css";
 import "./Champion.css";
 import boardContext from "../../context/board/boardContext";
 
 const Square = ({ row, column }) => {
-  const { droppable, board, handleDropOnSquare } = useContext(boardContext);
+  const { droppable, board, handleDropOnSquare, swapSquares } = useContext(
+    boardContext
+  );
   const [bg, setBg] = useState("bg-gray-800");
   const champion = board[row][column];
-  
+
   const [, drop] = useDrop({
     accept: "champion",
-    drop: ({ champion }) => handleDropOnSquare(champion, row, column),
+    drop: ({ champion, origin, originRow, originCol }) => {
+      if (origin === "champions") handleDropOnSquare(champion, row, column);
+      if (origin === "square") {
+        swapSquares(originRow, originCol, row, column);
+      }
+    },
+  });
+
+  const [{ isDragging }, drag] = useDrag({
+    item: {
+      type: "champion",
+      origin: "square",
+      originRow: row,
+      originCol: column,
+      champion,
+    },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
   });
 
   useEffect(() => {
@@ -33,27 +53,29 @@ const Square = ({ row, column }) => {
   // };
 
   return (
-    <div
-      ref={drop}
-      // draggable={!!champion}
-      // onDragOver={(e) => {
-      //   e.preventDefault();
-      //   e.dataTransfer.dropEffect = "copy";
-      // }}
-      // onDragStart={handleDragStart}
-      // onDrop={handleDrop}
-      className={`w-10 h-11 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${
-        champion ? "cost-" + champion.cost : "bg-gray-900"
-      } `}
-    >
-      <div className={`w-9 h-10 sm:w-18 sm:h-20 hexagon ${bg} object-cover`}>
-        {champion && (
-          <img
-            className="h-full w-full"
-            src={`${process.env.REACT_APP_URL_IMG}/img/champions/${champion.championId}.png`}
-            alt=""
-          />
-        )}
+    <div ref={champion && drag}>
+      <div
+        ref={drop}
+        // draggable={!!champion}
+        // onDragOver={(e) => {
+        //   e.preventDefault();
+        //   e.dataTransfer.dropEffect = "copy";
+        // }}
+        // onDragStart={handleDragStart}
+        // onDrop={handleDrop}
+        className={`w-10 h-11 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${
+          champion ? "cost-" + champion.cost : "bg-gray-900"
+        } `}
+      >
+        <div className={`w-9 h-10 sm:w-18 sm:h-20 hexagon ${bg} object-cover`}>
+          {champion && (
+            <img
+              className="h-full w-full"
+              src={`${process.env.REACT_APP_URL_IMG}/img/champions/${champion.championId}.png`}
+              alt=""
+            />
+          )}
+        </div>
       </div>
     </div>
   );

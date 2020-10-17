@@ -26,6 +26,16 @@ const BoardState = (props) => {
     });
   };
 
+  const swapSquares = (originRow, originCol, targetRow, targetCol) => {
+    dispatch({
+      type: "SWAP_SQUARES",
+      originRow,
+      originCol,
+      targetRow,
+      targetCol,
+    });
+  };
+
   // handle a non specific position addition to the board
   function addToBoard(championId) {
     const [row, column] = findFirstEmptySquare(state.board);
@@ -43,7 +53,7 @@ const BoardState = (props) => {
 
   return (
     <BoardContext.Provider
-      value={{ ...state, setBoardDroppable, handleDropOnSquare, addToBoard }}
+      value={{ ...state, setBoardDroppable, handleDropOnSquare, addToBoard, swapSquares }}
     >
       {props.children}
     </BoardContext.Provider>
