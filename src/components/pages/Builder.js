@@ -46,9 +46,12 @@ const Builder = () => {
   const { picker } = useContext(FiltersContext);
   return (
     <DndProvider options={HTML5toTouch}>
-      <div className="px-2 h-screen">
-        <h1 className="font text-xl text-teal-400">Lx4 Builder's</h1>
-        <div className="sm:flex mt-4">
+      <header className="h-8 bg-gray-900 shadow-lg px-1">
+        <h1 className="inline font text-xl text-teal-500">Builder</h1>
+        <span className="text-gray-600 pl-1 text-xs">by Lx4</span>
+      </header>
+      <div className="px-2 ">
+        <div className="sm:flex mt-4 ml-2">
           <Board />
           <div className="">Traits</div>
         </div>
