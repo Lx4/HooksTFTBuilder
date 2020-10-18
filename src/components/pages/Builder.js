@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
-// import { DndProvider } from "react-dnd";
-// import { HTML5Backend } from "react-dnd-html5-backend";
-// import { TouchBackend } from "react-dnd-touch-backend";
 import { DndProvider, usePreview } from "react-dnd-multi-backend";
 import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
-// import { usePreview } from "react-dnd-preview";
 
 import Board from "../builder/Board";
 import Champions from "../builder/Champions";
@@ -13,33 +9,51 @@ import Tabs from "../builder/layout/Tabs";
 
 import FiltersContext from "../../context/filters/filtersContext";
 
+import { getIdFormated } from "../../helpers/items";
+
 import "../builder/Champion.css";
 
-// Linked to usePreview to support multi backend with react dnd
+// Enable Preview for Touch Backend in items & champions pickers
 const MyPreview = () => {
+  // eslint-disable-next-line
   const { display, itemType, item, style } = usePreview();
-
-  let championId, cost;
-  if (item) {
-    if (item.champion) {
-      championId = item.champion.championId;
-      cost = item.champion.cost;
-    }
-  }
   if (!display) {
     return null;
   }
-  return (
-    <div
-      className={`h-8 w-8 sm:h-16 sm:w-16 border sm:border-2  sm:mr-1 sm:mb-1 object-cover rounded overflow-hidden cost-${cost}`}
-      style={style}
-    >
-      <img
-        src={`${process.env.REACT_APP_URL_IMG}/img/champions/${championId}.png`}
-        alt={`${championId}`}
-      />
-    </div>
-  );
+  switch (itemType) {
+    case "champion":
+      console.log("items type to champion and item is");
+      console.log(item);
+      const { championId, cost } = item.champion;
+
+      return (
+        <div
+          className={`h-8 w-8 sm:h-16 sm:w-16 border sm:border-2  sm:mr-1 sm:mb-1 object-cover rounded overflow-hidden cost-${cost}`}
+          style={style}
+        >
+          <img
+            src={`${process.env.REACT_APP_URL_IMG}/img/champions/${championId}.png`}
+            alt={`${championId}`}
+          />
+        </div>
+      );
+    case "item":
+      const id = getIdFormated(item.item.id);
+      const name = item.item.name;
+      return (
+        <div
+          className="h-8 w-8 sm:h-16 sm:w-16 sm:mr-1 sm:mb-1 object-cover rounded overflow-hidden"
+          style={style}
+        >
+          <img
+            src={`${process.env.REACT_APP_URL_IMG}/img/items/${id}.png`}
+            alt={`${name}`}
+          />
+        </div>
+      );
+    default:
+      return null;
+  }
 };
 
 const Builder = () => {
@@ -51,12 +65,12 @@ const Builder = () => {
         <span className="text-gray-600 pl-1 text-xs">by Lx4</span>
       </header>
       <div className="px-2 ">
-        <div className="sm:flex mt-4 ml-2">
+        <div className="sm:flex mt-4">
           <Board />
           <div className="">Traits</div>
         </div>
         <Tabs />
-        <div className="mt-4 container flex flex-col">
+        <div className="mt-4">
           {picker === "champions" && <Champions />}
           {picker === "items" && <Items />}
         </div>

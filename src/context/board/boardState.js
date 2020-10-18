@@ -7,17 +7,18 @@ import { initChampion } from "../../selectors/champion";
 const BoardState = (props) => {
   const initialState = {
     board: initEmptyBoard(),
-    droppable: false,
+    boardDroppable: false,
+    itemsDroppable: false,
+    championsDroppable: false,
   };
 
   const [state, dispatch] = useReducer(BoardReducer, initialState);
 
-  // Set Board droppable
-  const setBoardDroppable = (bool) => {
-    dispatch({ type: "SET_DROPPABLE", bool });
+  const setDroppable = (target, bool) => {
+    dispatch({ type: "SET_DROPPABLE", target, bool });
   };
 
-  const handleDropOnSquare = (champion, row, column) => {
+  const addChampion = (champion, row, column) => {
     dispatch({
       type: "ADD_CHAMPION",
       champion,
@@ -25,6 +26,15 @@ const BoardState = (props) => {
       column,
     });
   };
+
+  // const UpdateChampion = (championId, row, column) => {
+  //   dispatch({
+  //     type: "ADD_OR_UPDATE_CHAMPION",
+  //     champion: initChampion(championId),
+  //     row,
+  //     column,
+  //   });
+  // };
 
   const swapSquares = (originRow, originCol, targetRow, targetCol) => {
     dispatch({
@@ -35,6 +45,8 @@ const BoardState = (props) => {
       targetCol,
     });
   };
+
+  // const addItem =
 
   // handle a non specific position addition to the board
   function addToBoard(championId) {
@@ -53,7 +65,13 @@ const BoardState = (props) => {
 
   return (
     <BoardContext.Provider
-      value={{ ...state, setBoardDroppable, handleDropOnSquare, addToBoard, swapSquares }}
+      value={{
+        ...state,
+        setDroppable,
+        addChampion,
+        addToBoard,
+        swapSquares,
+      }}
     >
       {props.children}
     </BoardContext.Provider>

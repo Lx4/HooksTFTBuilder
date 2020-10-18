@@ -6,68 +6,65 @@ import "./Champion.css";
 import boardContext from "../../context/board/boardContext";
 
 const Square = ({ row, column }) => {
-  const { droppable, board, handleDropOnSquare, swapSquares } = useContext(
-    boardContext
-  );
+  const {
+    boardDroppable,
+    board,
+    addChampion,
+    swapSquares,
+    setDroppable,
+  } = useContext(boardContext);
   const [bg, setBg] = useState("bg-gray-800");
   const champion = board[row][column];
 
-  const [, drop] = useDrop({
-    accept: "champion",
-    drop: ({ champion, origin, originRow, originCol }) => {
-      if (origin === "champions") handleDropOnSquare(champion, row, column);
-      if (origin === "square") {
-        swapSquares(originRow, originCol, row, column);
-      }
-    },
-  });
-
+  // DRAG
   const [{ isDragging }, drag] = useDrag({
     item: {
       type: "champion",
       origin: "square",
       originRow: row,
       originCol: column,
-      champion,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
 
+  // & DROP
+  const [, drop] = useDrop({
+    accept: ["champion", "item"],
+    drop: ({ champion, origin, originRow, originCol, item }) => {
+      if (origin === "champions") addChampion(champion, row, column);
+      if (origin === "square") {
+        swapSquares(originRow, originCol, row, column);
+      }
+      if (origin === "items") {
+        if (champion === null) return;
+        // addItemToChampion(champion, row, column); SHOULD UPDATE CHAMPION, insert logic here
+      }
+    },
+  });
+
   useEffect(() => {
-    if (droppable) {
+    if (boardDroppable) {
       setBg("bg-gray-700");
     } else setBg("bg-gray-800");
-  }, [droppable]);
+  }, [boardDroppable]);
 
-  // const handleDragStart = (e) => {
-  //   e.dataTransfer.setData("source", "square");
-  //   e.dataTransfer.setData("sourceRow", row);
-  //   e.dataTransfer.setData("sourceColumn", column);
-  // };
-
-  // const handleDrop = (e) => {
-  //   // change the call to have more specific functions calls
-  //   handleDropOnSquare(e, row, column);
-  // };
+  useEffect(() => {
+    setDroppable("board", isDragging);
+    setDroppable("champions", isDragging);
+    // eslint-disable-next-line
+  }, [isDragging]);
 
   return (
     <div ref={champion && drag}>
       <div
         ref={drop}
-        // draggable={!!champion}
-        // onDragOver={(e) => {
-        //   e.preventDefault();
-        //   e.dataTransfer.dropEffect = "copy";
-        // }}
-        // onDragStart={handleDragStart}
-        // onDrop={handleDrop}
-        className={`w-10 h-11 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${
+        className={`w-11 h-12 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${
           champion ? "cost-" + champion.cost : "bg-gray-900"
         } `}
       >
-        <div className={`w-9 h-10 sm:w-18 sm:h-20 hexagon ${bg} object-cover`}>
+        <div className={`w-10 h-11 sm:w-18 sm:h-20 hexagon ${bg} object-cover`}>
           {champion && (
             <img
               className="h-full w-full"

@@ -5,5 +5,7 @@ export default (state, action) => {
         ...state,
         picker: action.picker,
       };
+    default:
+      return state;
   }
 };

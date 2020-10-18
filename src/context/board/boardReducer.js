@@ -24,10 +24,25 @@ export default (state, action) => {
       board[action.originRow][action.originCol] = temp;
       return { ...state, board };
     case "SET_DROPPABLE":
-      return {
-        ...state,
-        droppable: action.bool,
-      };
+      switch (action.target) {
+        case "board":
+          return {
+            ...state,
+            boardDroppable: action.bool,
+          };
+        case "champions":
+          return {
+            ...state,
+            championsDroppable: action.bool,
+          };
+        case "items":
+          return {
+            ...state,
+            itemsDroppable: action.bool,
+          };
+        default:
+          return state;
+      }
     default:
       return state;
   }
