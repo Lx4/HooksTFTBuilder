@@ -6,7 +6,6 @@ const Synergies = () => {
   const { board } = useContext(boardContext);
 
   const synergies = getSynergies(board);
-  console.log(synergies);
 
   return (
     <div className="flex items-center justify-center w-full h-16 rounded-sm border border-gray-700 mt-4">
