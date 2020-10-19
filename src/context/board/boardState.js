@@ -27,14 +27,14 @@ const BoardState = (props) => {
     });
   };
 
-  // const UpdateChampion = (championId, row, column) => {
-  //   dispatch({
-  //     type: "ADD_OR_UPDATE_CHAMPION",
-  //     champion: initChampion(championId),
-  //     row,
-  //     column,
-  //   });
-  // };
+  const updateChampion = (champion, row, column) => {
+    dispatch({
+      type: "UPDATE_CHAMPION",
+      champion,
+      row,
+      column,
+    });
+  };
 
   const swapSquares = (originRow, originCol, targetRow, targetCol) => {
     dispatch({
@@ -46,7 +46,13 @@ const BoardState = (props) => {
     });
   };
 
-  // const addItem =
+  const clearSquare = (row, col) => {
+    dispatch({
+      type: "CLEAR_SQUARE",
+      row,
+      col,
+    });
+  };
 
   // handle a non specific position addition to the board
   function addToBoard(championId) {
@@ -71,6 +77,8 @@ const BoardState = (props) => {
         addChampion,
         addToBoard,
         swapSquares,
+        clearSquare,
+        updateChampion,
       }}
     >
       {props.children}

@@ -7,7 +7,8 @@ import "./Champion.css";
 const Champion = ({ champion }) => {
   const { setDroppable, addToBoard } = useContext(boardContext);
   const { championId, cost } = champion;
-  champion.items = [];
+  // hack on champion.items to init if null, think it's the wrong place : tbd
+  !champion.items && (champion.items = []);
 
   const [{ isDragging }, drag] = useDrag({
     item: { type: "champion", champion, origin: "champions" },

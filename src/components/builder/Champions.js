@@ -1,13 +1,26 @@
 import React, { useContext } from "react";
+import { useDrop } from "react-dnd";
+
 import champions from "../../data/champions";
 
 import Champion from "./Champion";
 import boardContext from "../../context/board/boardContext";
 
 const Champions = () => {
-  const { championsDroppable } = useContext(boardContext);
+  const { championsDroppable, clearSquare } = useContext(boardContext);
+
+  // & DROP
+  const [, drop] = useDrop({
+    accept: ["champion"],
+    drop: ({ origin, originRow, originCol }) => {
+      if (origin === "square") {
+        clearSquare(originRow, originCol);
+      }
+    },
+  });
+
   return (
-    <div className="relative inline-flex sm:max-w-2xl flex-wrap">
+    <div ref={drop} className="relative inline-flex sm:max-w-2xl flex-wrap">
       {champions.map((champion) => (
         <Champion key={champion.championId} champion={champion}></Champion>
       ))}

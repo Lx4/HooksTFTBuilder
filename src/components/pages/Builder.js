@@ -6,6 +6,7 @@ import Board from "../builder/Board";
 import Champions from "../builder/Champions";
 import Items from "../builder/Items";
 import Tabs from "../builder/layout/Tabs";
+import Synergies from "../builder/Synergies";
 
 import FiltersContext from "../../context/filters/filtersContext";
 
@@ -22,8 +23,6 @@ const MyPreview = () => {
   }
   switch (itemType) {
     case "champion":
-      console.log("items type to champion and item is");
-      console.log(item);
       const { championId, cost } = item.champion;
 
       return (
@@ -64,7 +63,8 @@ const Builder = () => {
         <h1 className="inline font text-xl text-teal-500">Builder</h1>
         <span className="text-gray-600 pl-1 text-xs">by Lx4</span>
       </header>
-      <div className="px-2 ">
+      <Synergies />
+      <div className="px-2">
         <div className="sm:flex mt-4">
           <Board />
           <div className="">Traits</div>

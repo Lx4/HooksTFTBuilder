@@ -4,6 +4,7 @@ import { useDrop, useDrag } from "react-dnd";
 import "./Square.css";
 import "./Champion.css";
 import boardContext from "../../context/board/boardContext";
+import ItemsList from "./ItemsList";
 
 const Square = ({ row, column }) => {
   const {
@@ -12,6 +13,7 @@ const Square = ({ row, column }) => {
     addChampion,
     swapSquares,
     setDroppable,
+    updateChampion,
   } = useContext(boardContext);
   const [bg, setBg] = useState("bg-gray-800");
   const champion = board[row][column];
@@ -23,6 +25,7 @@ const Square = ({ row, column }) => {
       origin: "square",
       originRow: row,
       originCol: column,
+      champion,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -32,14 +35,22 @@ const Square = ({ row, column }) => {
   // & DROP
   const [, drop] = useDrop({
     accept: ["champion", "item"],
-    drop: ({ champion, origin, originRow, originCol, item }) => {
-      if (origin === "champions") addChampion(champion, row, column);
-      if (origin === "square") {
-        swapSquares(originRow, originCol, row, column);
+    drop: (item) => {
+      if (item.origin === "champions") addChampion(item.champion, row, column);
+      if (item.origin === "square") {
+        swapSquares(item.originRow, item.originCol, row, column);
       }
-      if (origin === "items") {
+      if (item.origin === "items") {
         if (champion === null) return;
-        // addItemToChampion(champion, row, column); SHOULD UPDATE CHAMPION, insert logic here
+        else {
+          if (champion.items.length < 3) {
+            console.log("dropping item on champion");
+            champion.items.push(item.item);
+            updateChampion(champion, row, column);
+          } else {
+            console.log("can't add any item, already 3");
+          }
+        }
       }
     },
   });
@@ -57,7 +68,7 @@ const Square = ({ row, column }) => {
   }, [isDragging]);
 
   return (
-    <div ref={champion && drag}>
+    <div className="relative" ref={champion && drag}>
       <div
         ref={drop}
         className={`w-11 h-12 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${
@@ -74,6 +85,7 @@ const Square = ({ row, column }) => {
           )}
         </div>
       </div>
+      {champion && <ItemsList items={champion.items} />}
     </div>
   );
 };

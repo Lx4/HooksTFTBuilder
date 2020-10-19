@@ -43,6 +43,34 @@ export default (state, action) => {
         default:
           return state;
       }
+    case "UPDATE_CHAMPION":
+      // Currently Update and drop do the same thing (change the board state with the new champion, this should be improved)
+      // https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
+      return {
+        ...state,
+        board: state.board.map((row, index) => {
+          if (index !== action.row) {
+            return row.slice();
+          }
+          return row.map((column, i) => {
+            if (i !== action.col) return column;
+            return action.champion;
+          });
+        }),
+      };
+    case "CLEAR_SQUARE":
+      return {
+        ...state,
+        board: state.board.map((row, index) => {
+          if (index !== action.row) {
+            return row.slice();
+          }
+          return row.map((column, i) => {
+            if (i !== action.col) return column;
+            return null;
+          });
+        }),
+      };
     default:
       return state;
   }
