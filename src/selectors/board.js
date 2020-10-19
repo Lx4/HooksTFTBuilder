@@ -40,11 +40,5 @@ export const getSynergies = (board) => {
     });
   }, []);
 
-  console.log(traits);
-  // for (let key in traits) {
-  //   console.log(key);
-  //   console.log(traits[key]);
-  // }
-
-  //   return uniqueChampionsList;
+  return traits;
 };
