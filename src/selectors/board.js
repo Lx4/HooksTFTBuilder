@@ -31,8 +31,10 @@ export const getSynergies = (board) => {
     return traitsList.map((trait) => {
       trait.style = null; // no active style
       for (let set of trait.sets) {
+        set.active = false;
         if (trait.value >= set.min && trait.value <= set.max) {
           trait.style = set.style;
+          set.active = true;
           break;
         }
       }

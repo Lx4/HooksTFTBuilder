@@ -6,7 +6,7 @@ import Board from "../builder/Board";
 import Champions from "../builder/Champions";
 import Items from "../builder/Items";
 import Tabs from "../builder/layout/Tabs";
-import Synergies from "../builder/Synergies";
+import SynergyList from "../builder/SynergyList.js";
 
 import FiltersContext from "../../context/filters/filtersContext";
 
@@ -63,7 +63,7 @@ const Builder = () => {
         <h1 className="inline font text-xl text-teal-500">Builder</h1>
         <span className="text-gray-600 pl-1 text-xs">by Lx4</span>
       </header>
-      <Synergies />
+      <SynergyList />
       <div className="px-2">
         <div className="sm:flex mt-4">
           <Board />

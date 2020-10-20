@@ -2,16 +2,19 @@ import React, { useContext } from "react";
 import boardContext from "../../context/board/boardContext";
 import { getSynergies } from "../../selectors/board";
 
-import "./Synergies.css";
+import Synergy from "./Synergy";
 
-const Synergies = () => {
+import "./SynergyList.css";
+
+const SynergyList = () => {
   const { board } = useContext(boardContext);
 
   const synergies = getSynergies(board);
+  console.log(synergies);
 
   if (!synergies.length) {
     return (
-      <div className="flex items-center justify-center w-full h-16 rounded-sm border border-gray-700 mt-4">
+      <div className="mt-4 flex items-center justify-center w-full h-16 rounded-sm border border-gray-700 ">
         <svg
           className="h-6 text-gray-400"
           xmlns="http://www.w3.org/2000/svg"
@@ -35,13 +38,13 @@ const Synergies = () => {
     );
   } else {
     return (
-      <div className="flex">
-        <div className="flex">
-          <img className="" src="/img/traits/adept.png" alt="" />
-        </div>
+      <div className="mt-4 h-16 flex overflow-x-auto">
+        {synergies.map((synergy) => (
+          <Synergy key={synergy.key} trait={synergy} />
+        ))}
       </div>
     );
   }
 };
 
-export default Synergies;
+export default SynergyList;

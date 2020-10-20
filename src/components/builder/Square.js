@@ -53,6 +53,9 @@ const Square = ({ row, column }) => {
         }
       }
     },
+    // hover: (props, monitor) => {
+    //   if (monitor.canDrop()) setBg("bg-red-400");
+    // },
   });
 
   useEffect(() => {
@@ -75,7 +78,9 @@ const Square = ({ row, column }) => {
           champion ? "cost-" + champion.cost : "bg-gray-900"
         } `}
       >
-        <div className={`w-10 h-11 sm:w-18 sm:h-20 hexagon ${bg} object-cover`}>
+        <div
+          className={`w-10 h-11 sm:w-18 sm:h-20 hexagon ${bg} hover:bg-red-300 object-cover`}
+        >
           {champion && (
             <img
               className="h-full w-full"
