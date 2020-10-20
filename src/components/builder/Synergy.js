@@ -20,7 +20,7 @@ const Synergy = ({ trait }) => {
           ) : (
             trait.sets.map((set, index) => {
               return (
-                <div className={`w-6 `}>
+                <div key={index} className={`w-6 `}>
                   <span className={`${set.active && "font-bold text-white"}`}>
                     {set.min}
                   </span>

@@ -16,6 +16,8 @@ const Square = ({ row, column }) => {
     updateChampion,
   } = useContext(boardContext);
   const [bg, setBg] = useState("bg-gray-800");
+  const [bgBorder, setBgBorder] = useState("bg-gray-900");
+  const [hover, setHover] = useState(false);
   const champion = board[row][column];
 
   // DRAG
@@ -33,7 +35,7 @@ const Square = ({ row, column }) => {
   });
 
   // & DROP
-  const [, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: ["champion", "item"],
     drop: (item) => {
       if (item.origin === "champions") addChampion(item.champion, row, column);
@@ -53,16 +55,25 @@ const Square = ({ row, column }) => {
         }
       }
     },
-    // hover: (props, monitor) => {
-    //   if (monitor.canDrop()) setBg("bg-red-400");
-    // },
+    hover: (props, monitor) => {
+      if (monitor.canDrop()) {
+        if (champion) {
+          setBgBorder("bg-white");
+          setHover(true);
+        } else setBg("bg-blue-400");
+      }
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+    // https://react-dnd.github.io/react-dnd/docs/tutorial#adding-drag-and-drop-interaction
   });
 
   useEffect(() => {
     if (boardDroppable) {
       setBg("bg-gray-700");
     } else setBg("bg-gray-800");
-  }, [boardDroppable]);
+  }, [boardDroppable, isOver]);
 
   useEffect(() => {
     setDroppable("board", isDragging);
@@ -70,20 +81,31 @@ const Square = ({ row, column }) => {
     // eslint-disable-next-line
   }, [isDragging]);
 
+  useEffect(() => {
+    if (champion) {
+      setBgBorder("cost-" + champion.cost);
+    } else {
+      setBgBorder("bg-gray-900");
+      setHover(false);
+    }
+  }, [champion, isOver]);
+
+  useEffect(() => {
+    setHover(false);
+  }, [isOver]);
+
   return (
     <div className="relative" ref={champion && drag}>
       <div
         ref={drop}
-        className={`w-11 h-12 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${
-          champion ? "cost-" + champion.cost : "bg-gray-900"
-        } `}
+        className={`w-11 h-12 sm:w-20 sm:h-22 mr-1 hexagon  flex items-center justify-center ${bgBorder} `}
       >
         <div
-          className={`w-10 h-11 sm:w-18 sm:h-20 hexagon ${bg} hover:bg-red-300 object-cover`}
+          className={`w-10 h-11 sm:w-18 sm:h-20 hexagon ${bg} hover:bg-red-300 object-cover `}
         >
           {champion && (
             <img
-              className="h-full w-full"
+              className={`h-full w-full ${hover && "blur-me"}`}
               src={`${process.env.REACT_APP_URL_IMG}/img/champions/${champion.championId}.png`}
               alt=""
             />

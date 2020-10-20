@@ -64,10 +64,9 @@ const Builder = () => {
         <span className="text-gray-600 pl-1 text-xs">by Lx4</span>
       </header>
       <SynergyList />
-      <div className="px-2">
-        <div className="sm:flex mt-4">
+      <div>
+        <div className="mt-4">
           <Board />
-          <div className="">Traits</div>
         </div>
         <Tabs />
         <div className="mt-4">

@@ -1,3 +1,7 @@
 .hexagon {
   clip-path: polygon(0%22%, 50%0%, 100%22%, 100%78%, 50%100%, 0%78%);
 }
+
+.blur-me {
+  filter: blur(1px);
+}
