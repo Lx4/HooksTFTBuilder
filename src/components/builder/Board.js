@@ -9,11 +9,11 @@ const Board = () => {
   const board = initEmptyBoard();
 
   return (
-    <div className="text-center">
+    <div className="text-center xl:max-w-3xl ">
       {board.map((row, rowIndex) => (
         <div
           key={rowIndex}
-          className={"inline-flex " + (rowIndex % 2 ? "ml-4" : "-ml-4")}
+          className={"inline-flex  " + (rowIndex % 2 ? "ml-4" : "-ml-4")}
         >
           {
             // eslint-disable-next-line

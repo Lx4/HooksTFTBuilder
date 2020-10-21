@@ -59,21 +59,26 @@ const Builder = () => {
   const { picker } = useContext(FiltersContext);
   return (
     <DndProvider options={HTML5toTouch}>
-      <header className="h-8 bg-gray-900 shadow-lg px-1">
-        <h1 className="inline font text-xl text-teal-500">Builder</h1>
-        <span className="text-gray-600 pl-1 text-xs">by Lx4</span>
-      </header>
-      <SynergyList />
-      <div>
-        <div className="mt-4">
-          <Board />
+      <header className="h-12 bg-gray-900 shadow-lg px-1 flex flex-col items-center justify-center">
+        <div>
+          <h1 className="inline font text-xl text-teal-500">Builder</h1>
+          <span className="text-gray-600 pl-1 text-xs">by Lx4</span>
         </div>
-        <Tabs />
-        <div className="mt-4">
-          {picker === "champions" && <Champions />}
-          {picker === "items" && <Items />}
+      </header>
+      <div className="xl:flex h-screen">
+        <SynergyList />
+        <div className="mt-4 xl:ml-12">
+          <Board />
+          <div className="mx-auto max-w-sm sm:max-w-xl lg:max-w-2xl">
+            <Tabs />
+            <div className="mt-4">
+              {picker === "champions" && <Champions />}
+              {picker === "items" && <Items />}
+            </div>
+          </div>
         </div>
       </div>
+
       <MyPreview />
     </DndProvider>
   );

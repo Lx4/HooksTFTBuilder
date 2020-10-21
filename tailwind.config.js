@@ -13,6 +13,9 @@ module.exports = {
         18: "4.5rem",
         22: "5.5rem",
       },
+      backgroundImage: (theme) => ({
+        "landing-image": "url('/img/bg/landing.jpg')",
+      }),
     },
   },
   variants: { backgroundColor: ["active"] },

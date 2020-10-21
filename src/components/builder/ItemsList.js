@@ -4,10 +4,10 @@ import { getIdFormated } from "../../helpers/items";
 const ItemsList = ({ items }) => {
   return (
     <div className="flex w-11 justify-around  absolute bottom-0 z-50">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <img
           className="w-4 h-4 rounded-full border"
-          key={item.id}
+          key={index}
           src={`${process.env.REACT_APP_URL_IMG}/img/items/${getIdFormated(
             item.id
           )}.png`}

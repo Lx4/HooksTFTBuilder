@@ -14,9 +14,9 @@ const SynergyList = () => {
 
   if (!synergies.length) {
     return (
-      <div className="mt-4 flex items-center justify-center w-full h-16 rounded-sm border border-gray-700 ">
+      <div className="mt-4 w-full h-16  flex  items-center justify-center rounded-sm border border-gray-700 xl:w-48 xl:ml-12">
         <svg
-          className="h-6 text-gray-400"
+          className="h-6 xl:h-12 text-gray-400"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -30,15 +30,15 @@ const SynergyList = () => {
           />
         </svg>
         <div>
-          <span className="text-gray-500 ml-4">
+          <div className="text-gray-500 ml-4">
             Select champions to activate synergies
-          </span>
+          </div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className="mt-4 h-16 flex overflow-x-auto">
+      <div className="mt-4 h-16 flex overflow-x-auto xl:h-full xl:w-48 xl:flex-col xl:ml-12 ">
         {synergies.map((synergy) => (
           <Synergy key={synergy.key} trait={synergy} />
         ))}

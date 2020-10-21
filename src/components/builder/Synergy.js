@@ -4,7 +4,7 @@ import Hexagon from "./layout/Hexagon2";
 const Synergy = ({ trait }) => {
   const { name, style } = trait;
   return (
-    <div className="flex border border-black rounded items-center px-2 mr-2">
+    <div className="flex border border-black rounded items-center px-2 mr-2 xl:mt-2">
       <Hexagon name={name} style={style} />
 
       <div className="w-5 h-8 ml-1 text-xs text-white  bg-gray-700 flex items-center justify-center rounded">

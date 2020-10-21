@@ -11,6 +11,7 @@ const Square = ({ row, column }) => {
     boardDroppable,
     board,
     addChampion,
+    clearSquare,
     swapSquares,
     setDroppable,
     updateChampion,
@@ -56,7 +57,7 @@ const Square = ({ row, column }) => {
       }
     },
     hover: (props, monitor) => {
-      if (monitor.canDrop()) {
+      if (monitor.canDrop() && props.origin !== "items") {
         if (champion) {
           setBgBorder("bg-white");
           setHover(true);
@@ -68,6 +69,11 @@ const Square = ({ row, column }) => {
     }),
     // https://react-dnd.github.io/react-dnd/docs/tutorial#adding-drag-and-drop-interaction
   });
+
+  // const onDoubleClick = () => {
+  //   console.log("clicked");
+  //   clearSquare(row, column);
+  // };
 
   useEffect(() => {
     if (boardDroppable) {
