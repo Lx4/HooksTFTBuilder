@@ -4,6 +4,7 @@ export const initChampion = (championId) => {
   const champion = champions.find(
     (champion) => champion.championId === championId
   );
-  champion.items = [];
-  return champion;
+  const newChamp = { ...champion };
+  newChamp.items = [];
+  return newChamp;
 };

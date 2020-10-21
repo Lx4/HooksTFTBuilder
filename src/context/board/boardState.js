@@ -18,10 +18,11 @@ const BoardState = (props) => {
     dispatch({ type: "SET_DROPPABLE", target, bool });
   };
 
+  // to mix with addToBoard
   const addChampion = (champion, row, column) => {
     dispatch({
       type: "ADD_CHAMPION",
-      champion,
+      champion : initChampion(champion.championId),
       row,
       column,
     });

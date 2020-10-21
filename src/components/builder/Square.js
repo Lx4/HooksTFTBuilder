@@ -118,7 +118,7 @@ const Square = ({ row, column }) => {
           )}
         </div>
       </div>
-      {champion && <ItemsList items={champion.items} />}
+      {champion && champion.items && <ItemsList items={champion.items} />}
     </div>
   );
 };
